@@ -1,5 +1,5 @@
 import express from 'express';
-import {getBuildings, getBuilding, postBuilding} from '../controllers/buildingController.js';
+import { getBuildings, getBuilding, postBuilding } from '../controllers/buildingController.js';
 const router = express.Router();
 
 // Get All

@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  //url = env("DATABASE_URL")
+}
+
+//MODELS
+
+model User {
+  id Int @id @default(autoincrement()) // should change to cuid()
+  isAdmin Boolean @default(false)
+  name String @unique
+  pass String
+  apartments Apartment[]
+  buildings Building[]
+}
+
+model Building{
+  id Int @id @default(autoincrement())
+  strAddress String
+  strNum Int
+  floors Int
+  apartments Apartment[]
+  expenses Expense[]
+  adminId Int
+  admin User @relation(fields: [adminId], references: [id])
+}
+
+model Apartment {
+  id String @id
+  floor Int
+  f1 Float // heating factor
+  //f2 Float // elevator factor
+  //sqrm Float // Size in m^2
+  bills Bill[]
+  ownerId Int?
+  buildingId Int
+  owner User? @relation(fields:[ownerId], references: [id])
+  building Building @relation(fields:[buildingId], references: [id])
+
+  @@unique([buildingId, id])
+}
+
+model Bill{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  paid Boolean @default(false)
+  aptId String
+  buildingId Int
+  apt Apartment @relation(fields: [aptId, buildingId], references: [id, buildingId])
+  amount Decimal @db.Decimal(8,2)
+}
+
+model ExpenseCategory{
+  id Int @id @default(autoincrement())
+  name String @unique // WATER, ELECTRICITY etc
+  expenses Expense[]
+}
+
+model Expense{
+  id Int @id @default(autoincrement())
+  buildingId Int
+  building Building @relation(fields: [buildingId], references: [id])
+  categoryId Int
+  category ExpenseCategory @relation(fields: [categoryId], references: [id])
+  description String 
+  issuedAt DateTime @default(now())
+  paid Boolean @default(false)
+  amount Decimal @db.Decimal(8,2)
+}
+
+// For receipt model (not implemented)
+// Method{
+//  CASH
+//  BANK
+// }

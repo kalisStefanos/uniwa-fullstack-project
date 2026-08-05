@@ -1,9 +1,4 @@
-
-let buildings = [
-    {id: 1, name: 'building1'},
-    {id: 2, name: 'building2'},
-    {id: 3, name: 'building3'}
-];
+import prisma from '../db.js';
 
 export const getBuildings = (req, res) => {
     res.json(buildings);
@@ -18,11 +13,29 @@ export const getBuilding = (req, res) => {
     res.status(404).json({ error: `Object with id ${id} not found` });
 };
 
-export const postBuilding = (req, res) => {
-    const building = {
-        id: buildings.length + 1,
-        title: req.body.title
+export const postBuilding = async (req, res) => {
+    const adminId = parseInt(req.body.adminId);
+    const floors = parseInt(req.body.floors);
+    const strAddr = req.body.strAddress;
+    const strNum = parseInt(req.body.strNum);
+
+    try {
+        const building = await prisma.building.create({
+            data: {
+                adminId: adminId,
+                floors: floors,
+                strAddress: strAddr,
+                strNum: strNum
+            }
+        })
+        res.status(201).json({
+            msg: 'Created new building',
+            building: {
+                bid: building.id
+            }
+        });
+    } catch(error){
+        console.error(error)
+        res.status(500).json({error: 'Internal server error'});
     }
-    buildings.push(building);
-    res.status(201).json(buildings);
 }
