@@ -4,12 +4,12 @@ import bcrypt from 'bcryptjs';
 // REGISTER
 export const register = async (req, res) => {
     try{
-        const { name, password } = req.body;
+        const { name, pass } = req.body;
 
         //Hash
 
         const salt = await bcrypt.genSalt(10);
-        const hashedPass = await bcrypt.hash(password, salt);
+        const hashedPass = await bcrypt.hash(pass, salt);
 
         const user = await prisma.user.create({
             data: {
