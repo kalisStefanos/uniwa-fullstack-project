@@ -4,16 +4,14 @@ import bcrypt from 'bcryptjs';
 // REGISTER
 export const register = async (req, res) => {
     try{
-        const { name, pass } = req.body;
-
-        //Hash
+        const { username, password } = req.body;
 
         const salt = await bcrypt.genSalt(10);
-        const hashedPass = await bcrypt.hash(pass, salt);
+        const hashedPass = await bcrypt.hash(password, salt);
 
         const user = await prisma.user.create({
             data: {
-                name: name,
+                name: username,
                 pass: hashedPass
             }
         })
@@ -27,7 +25,7 @@ export const register = async (req, res) => {
     } catch(error){
         if(error.code === 'P2002'){
             return res
-            .status(400)
+            .status(409)
             .json({error: "A user with this name already exists"});
         }
         console.error('Registration Error: ', error);
@@ -39,20 +37,26 @@ export const register = async (req, res) => {
 
 //LOGIN
 export const login = async (req, res) => {
-    const { name, password } = req.body;
+    const { username, password } = req.body;
 
     try{
         const user = await prisma.user.findUnique({
             where: {
-                name: name
+                name: username
             }
         })
 
-        if(!user || password !== user.pass){
-            return res.status(404).json({ error: 'Invalid username/password compination'});
+        if(user){
+            const isMatch = await bcrypt.compare(password, user.pass);
+
+            if(!isMatch){
+                return res.status(401).json({ error: 'Invalid username/password combination'});
+            }
+        } else {
+            return res.status(401).json({ error: 'Invalid username/password combination'});
         }
 
-        res.status(200).json({msg: 'Succefull login'});
+        res.status(200).json({msg: 'Successful login'});
 
     }catch(error){
         console.error("Error logging in:", error);
