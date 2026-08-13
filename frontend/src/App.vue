@@ -1,7 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import {RouterLink} from 'vue-router';
+</script>
 
 <template>
-  <h1>Uniwa App Page</h1>
+  <button><RouterLink to="/">HOME</RouterLink></button>
+  <RouterView />
 </template>
 
 <style scoped></style>
