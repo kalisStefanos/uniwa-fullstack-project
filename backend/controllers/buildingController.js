@@ -1,7 +1,8 @@
 import prisma from '../db.js';
 
-export const getBuildings = (req, res) => {
-    res.json(buildings);
+export const getBuildings = async (req, res) => {
+    //res.json(buildings);
+    res.status(200).json({msg: "Done"});
 };
 
 export const getBuilding = (req, res) => {
@@ -14,7 +15,7 @@ export const getBuilding = (req, res) => {
 };
 
 export const postBuilding = async (req, res) => {
-    const adminId = parseInt(req.body.adminId);
+    const adminId = req.user.id;
     const floors = parseInt(req.body.floors);
     const strAddr = req.body.strAddress;
     const strNum = parseInt(req.body.strNum);

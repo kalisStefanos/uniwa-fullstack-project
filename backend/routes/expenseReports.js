@@ -1,12 +1,9 @@
 import express from 'express';
-import { createApt, deleteApt } from '../controllers/apartmentsConstoller.js';
+import { createReport } from '../controllers/reportsController.js';
 import authMiddleware from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 router.use(authMiddleware);
-
-// Create Apartment
-router.post('/', createApt);
-router.delete('/:bid/:id', deleteApt);
+router.post('/', createReport);
 
 export default router;

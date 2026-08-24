@@ -2,7 +2,7 @@ import { error } from 'node:console';
 import prisma from '../db.js';
 
 export const createExpense = async (req, res) => {
-    const bid = parseInt(req.body.buildingId);
+    const bid = req.body.buildingId;
     const amount = parseFloat(req.body.amount);
     const cid = parseInt(req.body.categoryId);
     const desc = req.body.description;

@@ -1,6 +1,9 @@
 import express from 'express';
 import { getBuildings, getBuilding, postBuilding } from '../controllers/buildingController.js';
+import authMiddleware from "../middleware/authMiddleware.js"
 const router = express.Router();
+
+router.use(authMiddleware);
 
 // Get All
 router.get('/', getBuildings);
