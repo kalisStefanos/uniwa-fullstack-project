@@ -1,5 +1,6 @@
 import prisma from '../db.js';
 import bcrypt from 'bcryptjs';
+import generateToken from '../utils/tokenGenerator.js';
 
 // REGISTER
 export const register = async (req, res) => {
@@ -56,13 +57,22 @@ export const login = async (req, res) => {
             return res.status(401).json({ error: 'Invalid username/password combination'});
         }
 
-        res.status(200).json({msg: 'Successful login'});
+        const token = generateToken(user.id, res);
+
+        res.status(200).json({
+            status: "Success",
+            data:{
+                token: token
+            }
+        });
 
     }catch(error){
         console.error("Error logging in:", error);
         res.status(500).json({ msg: 'Internal Server Error'});
     }
 }
+
+// ===== DELETE USER =====
 
 export const deleteUser = async (req, res) => {
 
@@ -94,4 +104,14 @@ export const deleteUser = async (req, res) => {
             .status(500)
             .json({error: 'Internal server error'});
     }
+}
+
+export const logout = async (req, res) => {
+    res.cookie("jwt", "", {
+        httpOnly: true,
+        expires: new Date(0)
+    });
+    res.status(200).json({
+        msg: "Logged Out successfully",
+    })
 }

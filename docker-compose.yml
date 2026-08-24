@@ -4,9 +4,9 @@ services:
     container_name: uniwa_db
     restart: always
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: uniwa_db
+      POSTGRES_USER:admin
+      POSTGRES_PASSWORD:1234
+      POSTGRES_DB:uniwa_db
     ports:
       - "5432:5432" # localhost:5432 -> container:5432
     volumes:

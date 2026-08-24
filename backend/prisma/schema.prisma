@@ -16,8 +16,7 @@ datasource db {
 //MODELS
 
 model User {
-  id Int @id @default(autoincrement()) // should change to cuid()
-  isAdmin Boolean @default(false)
+  id String @id @default(uuid()) // should change to cuid()
   name String @unique
   pass String
   apartments Apartment[]
@@ -25,61 +24,67 @@ model User {
 }
 
 model Building{
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   strAddress String
   strNum Int
   floors Int
   apartments Apartment[]
   expenses Expense[]
-  adminId Int
+  expenseCategories ExpenseCategory[]
+  adminId String
   admin User @relation(fields: [adminId], references: [id])
 }
 
 model Apartment {
-  id String @id
+  id String @id @default(uuid())
+  area Int
   floor Int
-  f1 Float // heating factor
-  //f2 Float // elevator factor
-  //sqrm Float // Size in m^2
+  doorNum Int
+  //floor and doorNum should be unique
   bills Bill[]
-  ownerId Int?
-  buildingId Int
-  owner User? @relation(fields:[ownerId], references: [id])
+  buildingId String
   building Building @relation(fields:[buildingId], references: [id])
-
-  @@unique([buildingId, id])
+  ownerId String?
+  owner User? @relation(fields:[ownerId], references: [id])
 }
 
 model Bill{
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   createdAt DateTime @default(now())
   paid Boolean @default(false)
-  aptId String
-  buildingId Int
-  apt Apartment @relation(fields: [aptId, buildingId], references: [id, buildingId])
   amount Decimal @db.Decimal(8,2)
+  aptId String
+  apt Apartment @relation(fields: [aptId], references: [id])
+  expenseReportId String
+  expenseReport ExpenseReport @relation(fields: [expenseReportId], references: [id])
 }
 
 model ExpenseCategory{
   id Int @id @default(autoincrement())
   name String @unique // WATER, ELECTRICITY etc
+  buildingId String
+  building Building @relation(fields: [buildingId], references: [id])
+  areaWeight Decimal @db.Decimal(8,3) @default(1.0) 
+  floorWeight Decimal @db.Decimal(8,3) @default(1.0)
   expenses Expense[]
 }
 
 model Expense{
-  id Int @id @default(autoincrement())
-  buildingId Int
-  building Building @relation(fields: [buildingId], references: [id])
+  id String @id @default(uuid())
   categoryId Int
   category ExpenseCategory @relation(fields: [categoryId], references: [id])
   description String 
   issuedAt DateTime @default(now())
   paid Boolean @default(false)
   amount Decimal @db.Decimal(8,2)
+  buildingId String
+  building Building @relation(fields: [buildingId], references: [id])
+  expenseReportId String?
+  expenseReport ExpenseReport? @relation(fields: [expenseReportId], references: [id])
 }
 
-// For receipt model (not implemented)
-// Method{
-//  CASH
-//  BANK
-// }
+model ExpenseReport{
+  id String @id @default(uuid())
+  expenses Expense[]
+  bills Bill[]
+}
