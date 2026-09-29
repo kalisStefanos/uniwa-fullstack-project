@@ -9,11 +9,23 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 export default defineConfig({
   plugins: [
     tailwindcss(),
-    vue(),
+    vue({
+      template:{
+        compilerOptions:{
+          isCustomElement: (tag) => tag.includes('-')
+        }
+      }
+    }),
     vueDevTools(),
   ],
   server: {
-    port: 8000
+    port: 8000,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:9000',
+        changeOrigin: true,
+      }
+    }
   },
   resolve: {
     alias: {

@@ -1,19 +1,74 @@
 @import 'tailwindcss';
 
+@theme {
+ --color-orange: #ED6A5A;
+ --color-sand: #F4F1BB;
+ --color-sand-hover: #ECE79E;
+ --color-sand-active: #DFD87B;
+ --color-teal: #9BC1BC;
+ --color-tealess: #EFF7F7;
+}
+
 @layer components {
     
-    pTitle {
+    .add-button{
+        @apply text-sm border border-dashed rounded-2xl p-4
+    }
+
+    centered-container{
+        @apply block w-lg min-w-max mx-auto shrink-0 bg-orange border rounded p-4 my-2 
+    }
+
+    .info {
+        @apply  bg-tealess text-gray-800 border rounded text-nowrap truncate w-fit px-1 min-w-0;
+    }
+    
+    .header {
         @apply block w-full text-2xl font-bold mb-2 text-center;
     }
 
     form {
-        @apply border rounded-xl p-4 bg-gray-100 w-1/3;
+        @apply border rounded-xl p-4 bg-gray-100 w-1/3 mx-auto;
     }
 
-    button {
-        @apply border border-gray-600 rounded p-1 bg-green-200 hover:bg-green-300 active:bg-green-600 text-black;
+    .navButton {
+        @apply border rounded 
+        inline-block mx-2 py-1 w-36
+        bg-sand hover:bg-sand-hover active:bg-sand-active 
+        text-black text-center;
     }
+
+    .button {
+        @apply border rounded 
+        px-2 py-1  
+        bg-sand hover:bg-sand-hover active:bg-sand-active 
+        text-black text-center cursor-pointer;
+    }
+
     input {
-        @apply border border-gray-400 rounded p-1 bg-gray-200;
+        @apply border border-gray-400 rounded p-1 bg-gray-200 w-2/3 block max-w-64;
+    }
+
+    .listing {
+        @apply border rounded 
+        bg-teal 
+        p-2 my-4 w-full mx-auto
+        flex justify-between items-center
+        min-w-max
+        gap-20
+    }
+
+    .list {
+        @apply 
+        w-2/3 mx-auto min-w-max
+    }
+
+    .infoLabel {
+        @apply
+        font-medium text-gray-900 m-1
+    }
+
+    .loader {
+        @apply text-center py-6 flex items-center justify-center space-x-2
     }
 }

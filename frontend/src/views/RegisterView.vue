@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import RegisterForm from '@/components/RegisterForm.vue';
+  import RegisterForm from '@/components/RegisterForm.vue';
+  import BackButton from '@/components/BackButton.vue';
 </script>
 
 <template>
-
-  <pTitle>Register View</pTitle>
-  <div class="h-100 flex items-center justify-center">
+  <div>
+    <h1 class="font-bold bg-orange text-center p-4 text-3xl border">Building Management App</h1>
+  </div>
+  <div class="m-5">
     <RegisterForm />
   </div>
-
+  <div class="m-5">
+    <BackButton />
+  </div>
 </template>

@@ -1,26 +1,37 @@
 import express from 'express';
-import auth from './routes/auth.js';
-import buildings from './routes/buildings.js';
-import apartments from './routes/apartments.js'
-import expenses from './routes/expenses.js';
-import expenseReports from './routes/expenseReports.js';
-import expenseCats from './routes/expenseCats.js';
+
+import userRoutes from './routes/userRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import buildingRoutes from './routes/buildingRoutes.js';
+import apartmentRoutes from './routes/apartmentRoutes.js'
+import expenseRoutes from './routes/expenseRoutes.js';
+import cookieParser from 'cookie-parser';
+import billRoutes from './routes/billRoutes.js'
 
 import cors from 'cors';
+import errorHandler from './middleware/errorHandler.js';
 
 const app = express();
 const port = process.env.PORT = 9000 || 9090;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:8000', 
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
-app.use('/api', auth);
-app.use('/api/buildings', buildings);
-app.use('/api/apartments', apartments);
-app.use('/api/expenses', expenses);
-app.use('/api/expenseCategories', expenseCats);
-app.use('/api/reports', expenseReports);
+app.use('/api/user', userRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/buildings', buildingRoutes);
+app.use('/api', apartmentRoutes);
+app.use('/api/buildings/:id/expenses', expenseRoutes);
+app.use('/api/bills', billRoutes);
+
+app.use(errorHandler);
 
 app.listen(port, () => console.log(`Express is running on port ${port}`)); // port and callback function

@@ -13,8 +13,11 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
     "axios": "^1.19.0",
+    "primeicons": "^8.0.0",
     "vue": "^3.5.40",
-    "vue-router": "^5.2.0"
+    "vue-router": "^5.2.0",
+    "vue-spinner": "^3.0.2",
+    "vue-toastification": "^2.0.0-rc.5"
   },
   "devDependencies": {
     "@tsconfig/node24": "^24.0.4",

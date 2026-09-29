@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import {RouterLink} from 'vue-router';
+  import { useRoute } from 'vue-router';
+  import NavBar from './components/NavBar.vue';
+
+  const route = useRoute();
 </script>
 
 <template>
-  <button><RouterLink to="/">HOME</RouterLink></button>
-  <RouterView />
+  <div>
+    <NavBar v-if="!route.meta.hideNavbar" />
+    <RouterView />
+  </div>
 </template>
 
 <style scoped></style>
