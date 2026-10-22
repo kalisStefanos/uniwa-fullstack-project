@@ -1,21 +1,14 @@
 import express from 'express';
-import { createExpense, getExpenses, getExpenseCats, postExpenseCat, createReport, getReports } from '../controllers/expensesController.js';
 import authMiddleware from '../middleware/authMiddleware.js';
+import { expenseController } from '../container.js';
 
 const router = express.Router({ mergeParams: true});
 
-// Get All
-// router.get('/', );
-
 router.use(authMiddleware);
 
-// Post new Expense
-router.get('/', getExpenses);
-router.post('/', createExpense);
-router.get('/categories', getExpenseCats)
-router.post('/categories', postExpenseCat);
-router.post('/issue', createReport)
-router.get('/reports', getReports)
+router.get('/expenses/:id', expenseController.getExpense);
+router.get('/buildings/:bid/expenses', expenseController.getExpenses);
+router.post('/buildings/:bid/expenses', expenseController.createExpense)
 
 
 export default router;

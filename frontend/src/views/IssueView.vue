@@ -42,7 +42,7 @@ import {ref, onMounted, computed } from 'vue'
     const issueBills = async () => {
         try{
             isLoading.value = true;
-            const res = await axios.post(`/api/buildings/${id}/expenses/issue`, {expenseIds: selectedExpenses.value, description: description.value})
+            const res = await axios.post(`/api/buildings/${id}/reports`, {expenseIds: selectedExpenses.value, description: description.value})
             toast.success("Issued new Bills Succesfully")
             router.push(`/buildings/${id}`)
         }catch(error){

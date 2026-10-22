@@ -21,6 +21,16 @@ export function createApartmentRepository(prisma){
             })
         },
 
+        async getApartmentByBuildingAndOwner(bid, ownerId){
+            return await prisma.apartment.findFirst({
+                where: {
+                    buildingId: bid,
+                    ownerId
+                },
+                select: { id: true }
+            })
+        },
+
         async getApartmentsByBuilding(buildingId){
             return await prisma.apartment.findMany({ 
                 where: { buildingId },

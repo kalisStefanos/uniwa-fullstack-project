@@ -41,6 +41,10 @@ export function createBillService(billRepository, apartmentRepository){
                 bills, 
                 accessLevel
             }
+        },
+
+        async getBillsByReportId(rid, authId){
+            const report = await reportRepository.getReport(rid)
         }
     }
 }

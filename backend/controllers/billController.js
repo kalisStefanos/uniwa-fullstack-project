@@ -16,6 +16,15 @@ export function createBillController(billService){
             }catch(err){
                 next(err)
             }
+        },
+
+        async getBillsByReportId(req, res, next){
+            try{
+                const bills = await billService.getBillsByReportId(req.params.rid, req.user.id)
+                res.status(200).json(bills);
+            }catch(err){
+                next(err)
+            }
         }
     }
 }

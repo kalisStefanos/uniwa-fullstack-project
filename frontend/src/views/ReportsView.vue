@@ -14,7 +14,7 @@
 
     onMounted(async () => {
         try{
-            const res = await axios.get(`/api/buildings/${id}/expenses/reports`);
+            const res = await axios.get(`/api/buildings/${id}/reports`);
             reports.value = res.data
 
         }catch(error){
