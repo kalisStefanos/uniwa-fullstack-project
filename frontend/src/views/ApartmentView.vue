@@ -62,13 +62,14 @@
                         All your bills are paid!
                     </div>
                     <div class="flex items-center justify-center gap-4 pb-4">
-                        <RouterLink to="/#" class="button">All Bills</RouterLink>
+                        <RouterLink :to="`/apartments/${aid}/bills`" class="button">All Bills</RouterLink>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="bg-teal border rounded p-4 w-150 mx-auto ">
+        LATEST BILLS
         <div v-for="bill in apartment?.bills" class="flex justify-between border rounded p-1 items-center w-2/3 mx-auto m-2">
             <span>
                 {{ bill.amount }} €

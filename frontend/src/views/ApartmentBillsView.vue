@@ -4,7 +4,7 @@
     import axios from 'axios';
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
     import BackButton from '@/components/BackButton.vue';
-import BillListing from '@/components/BillListing.vue';
+    import BillListing from '@/components/BillListing.vue';
 
     const route = useRoute();
 

@@ -2,6 +2,24 @@ import { ForbiddenError, NotFoundError } from "../errors/AppError.js"
 
 export function createBillService(billRepository, apartmentRepository){
     return{
+
+        async payBill(bid, authId){
+            const bill = await billRepository.getBill(bid)
+            if(!bill){
+                throw new NotFoundError("The requested bill was not found.")
+            }
+            let accessLevel = 'none';
+            if (bill.apt.building.adminId === authId) accessLevel = 'admin';
+            if (bill.apt.ownerId === authId) accessLevel = 'owner';
+            if (accessLevel === 'none'){
+                throw new ForbiddenError('User has no access to this resource')
+            }
+            if(bill.paid){
+                throw new ForbiddenError('Bill has already been paid.')
+            }
+            return await billRepository.payBill(bid)
+        },
+
         async getBill(bid, authId){
             const bill = await billRepository.getBill(bid)
             
@@ -10,8 +28,8 @@ export function createBillService(billRepository, apartmentRepository){
             }
 
             let accessLevel = 'none';
-            if (bill.apt.building.adminId === userId) accessLevel = 'admin';
-            if (bill.apt.ownerId === userId) accessLevel = 'owner';
+            if (bill.apt.building.adminId === authId) accessLevel = 'admin';
+            if (bill.apt.ownerId === authId) accessLevel = 'owner';
 
             if (accessLevel === 'none'){
                 throw new ForbiddenError('User has no access to this resource')

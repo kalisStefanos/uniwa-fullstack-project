@@ -1,5 +1,14 @@
 export function createBillController(billService){
     return{
+        async payBill(req, res, next){
+            try{
+                const bill = await billService.payBill(req.params.bid, req.user.id)
+                res.status(200).json(bill);
+            }catch(err){
+                next(err)
+            }
+        },
+        
         async getBill(req, res, next){
             try{
                 const bill = await billService.getBill(req.params.bid, req.user.id)

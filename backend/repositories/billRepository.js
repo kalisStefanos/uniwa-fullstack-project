@@ -2,6 +2,14 @@ import { describe } from "node:test";
 
 export function createBillRepository(prisma){
     return{
+        async payBill(bid){
+            const bill = await prisma.bill.update({
+                where: { id: bid },
+                data: { paid: true }
+            });
+            return bill;
+        },
+
         async getBill(bid){
             const bill = await prisma.bill.findUnique({ 
                 where: { id: bid },

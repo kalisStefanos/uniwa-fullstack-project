@@ -10,7 +10,7 @@
 <template>
     
     <div class="listing">
-        <div class="flex justify-between items-center gap-4 text-gray-700 p-2">
+        <div class="flex justify-center items-center gap-4 text-gray-700 p-2">
             <span class="w-62 border rounded px-1"><i class="pi pi-map-marker mr-1"></i>{{ apartment.building.strAddress }} {{ apartment.building.strNum }} </span>
             <span class="w-16 border rounded px-1"><i class="pi pi-sort mr-1"></i> {{ apartment.floor }}</span>
             <span class="w-16 border rounded px-1"><i class="pi pi-hashtag mr-1"></i> {{ apartment.doorNum }}</span>

@@ -4,9 +4,7 @@
 </script>
 
 <template>
-    <div>
-        <h1 class="font-bold bg-orange text-center p-4 text-3xl border">Building Management App</h1>
-    </div>
+    <div class="font-bold bg-orange text-center p-4 text-3xl border"><i class="pi pi-building"></i> Building Management App</div>
     <div class="m-5">
         <LoginForm/>
     </div>

@@ -34,3 +34,23 @@ describe('POST /api/auth/register', () => {
     expect(res.status).toBe(409);
   });
 });
+
+describe('POST /api/auth/login', () => {
+  it('logs in an existing user', async () => {
+
+    await request(app).post('/api/auth/register').send({ name: 'steve', pass: '1234' });
+
+    const agent = request.agent(app);
+    const res =  await agent.post('/api/auth/login').send({ name: 'steve', pass: '1234' });
+
+    expect(res.status).toBe(200);
+    expect(res.body.msg).toBe('Logged in Successfully');
+  });
+
+  it('returns 401 when the credentials are invalid', async () => {
+    const body = { name: 'bad_username', pass: 'bad_password' };
+    const res = await request(app).post('/api/auth/login').send(body);
+
+    expect(res.status).toBe(401);
+  });
+});

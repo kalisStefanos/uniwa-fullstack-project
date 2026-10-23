@@ -7,7 +7,7 @@ export function createUserRepository(prisma){
         },
 
         async getUserByName(name){
-            return await prisma.user.findFirst({ where: { name }})
+            return await prisma.user.findFirst({ where: { name : name }}) //db query
         },
 
         async createUser(name, pass){

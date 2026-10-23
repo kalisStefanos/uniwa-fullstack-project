@@ -16,7 +16,7 @@ const toast = useToast();
 
 const registerUser = async () => {
   try {
-    errorMessage.value = '';
+    errorMessage.value = ''; 
     isLoading.value = true;
     const res = await axios.post('http://localhost:9000/api/auth/register', {
       name: username.value,

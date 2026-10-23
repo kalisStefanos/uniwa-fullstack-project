@@ -36,6 +36,7 @@
             <RouterLink to="/dashboard" class="navButton"><i class="pi pi-grip mr-2"></i>Dashboard</RouterLink>
             <RouterLink to="/buildings" class="navButton"><i class="pi pi-building"></i> My Buildings</RouterLink>
             <RouterLink to="/apartments" class="navButton"><i class="pi pi-home"></i> My Apartments</RouterLink>
+            <button disabled class="navButton disabled:cursor-not-allowed"><i class="pi pi-comments"></i> Messages</button>
         </div>
         <div class=" flex items-center gap-4">
             <div><i class="pi pi-user text-2xl"></i> {{ user?.name }}</div>

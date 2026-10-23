@@ -74,6 +74,7 @@ const router = createRouter({
     {
       path:'/buildings/:id/apartments/:aid/bills',
       name: 'ApartmentBillsView',
+      alias: ['/apartments/:aid/bills'],
       component: () => import('@/views/ApartmentBillsView.vue'),
     },
     {
